@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  redmine:
+    restart: always
+    image: sameersbn/redmine:4.0.3-1
+    env_file:
+      - .env_redmine
+    ports:
+      - "10083:80"
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro 
+      - ./data/redmine:/home/redmine/data
+
+  postgresql:
+    image: sameersbn/postgresql:9.6-4
+    environment:
+      - DB_USER=redmine
+      - DB_PASS=password
+      - DB_NAME=redmine_prod
+      - DEBUG=false
+      - USERMAP_UID=1000
+      - USERMAP_GID=1000
+
+    volumes:
+      - ./data/pg:/var/lib/postgresql
+
