@@ -2,6 +2,15 @@ version: '3'
 
 services:
 
+  dd-agent:
+    image: datadog/docker-dd-agent
+    env_file:           
+      - .env_datadog    
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+
   https-portal:         
     restart: always     
     image: steveltn/https-portal:1

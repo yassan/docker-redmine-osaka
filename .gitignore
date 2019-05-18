@@ -2,3 +2,4 @@ data/*
 data-pg/*
 *.swp
 .env_redmine
+.env_datadog
